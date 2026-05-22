@@ -210,7 +210,16 @@ body { overflow:auto; background:var(--bg); }
 .s4-img { border-radius:20px; overflow:hidden; box-shadow:0 24px 72px rgba(123,60,255,0.12); line-height:0; }
 .s4-img img { width:100%; height:auto; display:block; }
 
-/* ===== S5: COMMISSION ===== */
+/* ===== S5: FESTA ===== */
+.s5f { background:var(--bg); }
+.s5f-inner {
+  width:100%; max-width:1300px; padding:0 80px;
+  display:grid; grid-template-columns:1fr 1fr; gap:clamp(48px,6vw,100px); align-items:center;
+}
+.s5f-img { border-radius:24px; overflow:hidden; box-shadow:0 24px 72px rgba(0,0,0,0.13); line-height:0; }
+.s5f-img img { width:100%; height:auto; display:block; }
+
+/* ===== S6: COMMISSION ===== */
 .s5 { background:var(--navy); }
 .s5::before {
   content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
@@ -277,13 +286,13 @@ body { overflow:auto; background:var(--bg); }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width:1024px) {
-  .s0-inner, .sf-inner, .s4-inner, .s5-inner { grid-template-columns:1fr; padding:0 40px; gap:36px; }
+  .s0-inner, .sf-inner, .s4-inner, .s5-inner, .s5f-inner { grid-template-columns:1fr; padding:0 40px; gap:36px; }
   .s0-cards { display:grid; grid-template-columns:1fr 1fr; }
   .s6-inner { padding:0 40px; }
   .s6-grid { grid-template-columns:1fr; }
 }
 @media (max-width:640px) {
-  .s0-inner, .sf-inner, .s4-inner, .s5-inner, .s6-inner { padding:0 24px; }
+  .s0-inner, .sf-inner, .s4-inner, .s5-inner, .s5f-inner, .s6-inner { padding:0 24px; }
   .s0-cards { grid-template-columns:1fr; }
   .s7-inner { padding:0 24px; }
   .nav-dots { display:none; }
@@ -319,6 +328,7 @@ body { overflow:auto; background:var(--bg); }
         <div class="s0-card"><div class="s0-card-num">02 · CELEB SYSTEM</div><div class="s0-card-title">셀럽 체험, 팬 예약</div><div class="s0-card-desc">한정 공동구매, 퍼블릭 OTA 미노출</div></div>
         <div class="s0-card"><div class="s0-card-num">03 · REAL REVIEW</div><div class="s0-card-title">수천 개 영상 리뷰</div><div class="s0-card-desc">분위기·소음·뷰·동선을 영상으로</div></div>
         <div class="s0-card"><div class="s0-card-num">04 · AI SMART REPORT</div><div class="s0-card-title">AI 실시간 분석·리포트</div><div class="s0-card-desc">경쟁 비교·예약 트렌드 자동화</div></div>
+        <div class="s0-card"><div class="s0-card-num">05 · GOV CAMPAIGN</div><div class="s0-card-title">3년 연속 정부 공식 참여</div><div class="s0-card-desc">쿠폰 판매 3위, MZ 55% 혜택 수령</div></div>
       </div>
     </div>
   </div>
@@ -390,8 +400,22 @@ body { overflow:auto; background:var(--bg); }
     </div>
   </div>
 
-  <!-- S5: COMMISSION -->
-  <div class="slide s5" data-i="5">
+  <!-- S5: GOV CAMPAIGN / FESTA -->
+  <div class="slide s5f" data-i="5">
+    <div class="s5f-inner">
+      <div>
+        <div class="sf-num-row"><div class="sf-num">05</div><span class="sf-tag">GOV CAMPAIGN</span></div>
+        <h2 style="font-size:clamp(28px,3.8vw,52px);font-weight:900;letter-spacing:-1.2px;line-height:1.12;color:var(--text);margin-bottom:16px;word-break:keep-all;">국가 공인 숙박 할인 행사,<br><strong style="color:var(--p);">3년 연속 공식 참여</strong></h2>
+        <p style="font-size:clamp(13px,1.1vw,16px);line-height:1.95;color:var(--gray);word-break:keep-all;"><strong style="color:var(--p);font-weight:700;">문화체육관광부 × 한국관광공사</strong> 공식 참여 OTA.<br>역대 참여 OTA 중 쿠폰 판매 3위, 매 회차 MZ 고객 55%가 혜택을 수령한 플랫폼.<br>정부 행사와 함께하는 플랫폼, <strong style="color:var(--text);font-weight:700;">귀 숙소의 노출 기회도 함께 커집니다.</strong></p>
+      </div>
+      <div class="s5f-img">
+        <img src="festa.png" alt="대한민국 숙박세일 페스타">
+      </div>
+    </div>
+  </div>
+
+  <!-- S6: COMMISSION -->
+  <div class="slide s5" data-i="6">
     <div class="s5-inner">
       <div>
         <div class="s5-num">14<span>%</span></div>
@@ -411,7 +435,7 @@ body { overflow:auto; background:var(--bg); }
   </div>
 
   <!-- S6: PLATFORM INFO -->
-  <div class="slide s6" data-i="6">
+  <div class="slide s6" data-i="7">
     <div class="s6-inner">
       <div class="s6-tag">PLATFORM INFO</div>
       <h2>플랫폼 및 <span>운영 정보</span></h2>
@@ -424,7 +448,7 @@ body { overflow:auto; background:var(--bg); }
   </div>
 
   <!-- S7: CTA -->
-  <div class="slide s7" data-i="7">
+  <div class="slide s7" data-i="8">
     <div class="s7-inner">
       <h2>지금 바로<br>입점 신청을</h2>
       <p>아래 온보딩 링크를 통해 파트너 등록을 진행해 주시면,<br>담당자가 확인 후 계약서 발송과 함께 안내드립니다.</p>
@@ -438,17 +462,17 @@ body { overflow:auto; background:var(--bg); }
 <!-- NAV ARROWS -->
 <div class="nav-arrows light" id="navArrows">
   <button class="nav-btn" onclick="go(-1)">↑</button>
-  <span class="nav-counter" id="counter">1 / 8</span>
+  <span class="nav-counter" id="counter">1 / 9</span>
   <button class="nav-btn" onclick="go(1)">↓</button>
 </div>
 
 <script>
-const TOTAL = 8;
+const TOTAL = 9;
 let cur = 0;
 let locked = false;
 
 // Dark slides
-const DARK = [0, 5];
+const DARK = [0, 6];
 
 function initDots() {
   const el = document.getElementById('navDots');
