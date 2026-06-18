@@ -22,29 +22,6 @@
 html, body { width:100%; font-family:var(--f); -webkit-font-smoothing:antialiased; }
 body { overflow:auto; background:var(--bg); }
 
-/* ===== MODE BAR ===== */
-.mode-bar {
-  position:fixed; top:20px; right:24px; z-index:9999;
-  display:flex; gap:6px;
-  background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:999px; padding:5px;
-  box-shadow:0 4px 20px rgba(0,0,0,0.2);
-  transition: background 0.3s, border-color 0.3s;
-}
-.mode-bar.light {
-  background:rgba(255,255,255,0.92);
-  border-color:var(--border);
-}
-.mode-btn {
-  padding:7px 16px; border-radius:999px; border:none;
-  font-family:var(--f); font-size:12px; font-weight:700;
-  cursor:pointer; transition:all 0.2s; white-space:nowrap;
-  color:rgba(255,255,255,0.5); background:transparent;
-}
-.mode-bar.light .mode-btn { color:var(--gray); }
-.mode-btn.active { background:var(--p); color:white !important; }
 
 /* ===== SLIDE ENGINE ===== */
 .slides { width:100%; position:relative; overflow:visible; }
@@ -217,7 +194,7 @@ body { overflow:auto; background:var(--bg); }
   display:grid; grid-template-columns:1fr 1fr; gap:clamp(48px,6vw,100px); align-items:center;
 }
 .s5f-img { border-radius:24px; overflow:hidden; box-shadow:0 24px 72px rgba(0,0,0,0.13); line-height:0; }
-.s5f-img img { width:100%; height:auto; display:block; }
+.s5f-img img { width:100%; height:auto; display:block; aspect-ratio:4/3; object-fit:cover; object-position:center; transform:scale(1.3) translateY(8%); transform-origin:center center; }
 
 /* ===== S6: COMMISSION ===== */
 .s5 { background:var(--navy); }
@@ -282,7 +259,16 @@ body { overflow:auto; background:var(--bg); }
 }
 .s7-btn:hover { transform:translateY(-3px); }
 .s7-contact { margin-top:20px; font-size:13px; color:var(--gray); }
-.s7-contact a { color:var(--p); font-weight:700; text-decoration:none; }
+.s7-contact-btn { color:var(--p); font-weight:700; background:none; border:none; font-family:inherit; font-size:inherit; cursor:pointer; padding:0; }
+.toast {
+  position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(12px);
+  background:#1A1A2E; color:white; font-size:13px; font-weight:600;
+  padding:12px 22px; border-radius:10px;
+  opacity:0; pointer-events:none;
+  transition:opacity 0.22s, transform 0.22s;
+  z-index:9999; white-space:nowrap;
+}
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width:1024px) {
@@ -301,12 +287,6 @@ body { overflow:auto; background:var(--bg); }
 </head>
 <body>
 
-<div class="mode-bar light" id="modeBar">
-  <button class="mode-btn" onclick="setMode('brochure')" id="btn-b">📄 브로셔</button>
-  <button class="mode-btn active" onclick="setMode('slides')" id="btn-s">▶ 슬라이드</button>
-</div>
-
-<div class="nav-dots" id="navDots"></div>
 
 <div class="slides" id="slidesWrap">
 
@@ -409,7 +389,7 @@ body { overflow:auto; background:var(--bg); }
         <p style="font-size:clamp(13px,1.1vw,16px);line-height:1.95;color:var(--gray);word-break:keep-all;"><strong style="color:var(--p);font-weight:700;">문화체육관광부 × 한국관광공사</strong>와 함께하는 OTA.<br>역대 참여 OTA 중 쿠폰 판매 3위, 매 회차 MZ 고객 55%가 혜택을 수령한 플랫폼.<br>정부 행사와 함께하는 플랫폼, <strong style="color:var(--text);font-weight:700;">귀 숙소의 노출 기회도 함께 커집니다.</strong></p>
       </div>
       <div class="s5f-img">
-        <img src="festa.webp" alt="대한민국 숙박세일 페스타">
+        <img src="https://asset.tripbtoz.com/email/crm/019ed4d79a76776c9d29bd8fb08090ca.png" alt="대한민국 숙박세일 페스타">
       </div>
     </div>
   </div>
@@ -451,170 +431,29 @@ body { overflow:auto; background:var(--bg); }
   <div class="slide s7" data-i="8">
     <div class="s7-inner">
       <h2>지금 바로<br>입점 신청을</h2>
-      <p>아래 온보딩 링크를 통해 파트너 등록을 진행해 주시면,<br>담당자가 확인 후 계약서 발송과 함께 안내드립니다.</p>
+      <p>아래 온보딩 링크를 통해 파트너 등록을 진행해 주시면 담당자가 확인 후 계약서 발송과 함께 안내드립니다.</p>
       <a href="https://join.tripbtoz.com/onboard?utm_source=team_onboarding" class="s7-btn" target="_blank">트립비토즈 온보딩 바로가기 →</a>
-      <p class="s7-contact">1:1 상담 <a href="mailto:partner@tripbtoz.com">partner@tripbtoz.com</a></p>
+      <p class="s7-contact">이메일 문의 <button class="s7-contact-btn" onclick="copyEmail()">btozsales@tripbtoz.com</button></p>
     </div>
   </div>
 
 </div>
 
-<!-- NAV ARROWS -->
-<div class="nav-arrows light" id="navArrows">
-  <button class="nav-btn" onclick="go(-1)">↑</button>
-  <span class="nav-counter" id="counter">1 / 9</span>
-  <button class="nav-btn" onclick="go(1)">↓</button>
-</div>
+<div class="toast" id="toast">이메일 주소가 복사되었습니다 ✓</div>
 
 <script>
-const TOTAL = 9;
-let cur = 0;
-let locked = false;
-
-// Dark slides
-const DARK = [0, 6];
-
-function initDots() {
-  const el = document.getElementById('navDots');
-  el.innerHTML = '';
-  for (let i = 0; i < TOTAL; i++) {
-    const b = document.createElement('button');
-    b.className = 'nav-dot' + (DARK.includes(i) ? '' : ' dark-dot') + (i === 0 ? ' active' : '');
-    b.onclick = () => goTo(i);
-    el.appendChild(b);
-  }
-}
-
-function goTo(n) {
-  if (n === cur || locked) return;
-  locked = true;
-  const slides = document.querySelectorAll('.slide');
-  const dir = n > cur ? 'up' : 'down';
-
-  // 현재 슬라이드 영상 정지
-  slides[cur].querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
-
-  slides[cur].classList.add(dir === 'up' ? 'exit-up' : 'exit-down');
-  const prev = cur;
-  cur = Math.max(0, Math.min(TOTAL - 1, n));
-  slides[cur].classList.remove('slide-hidden');
-
-  // 새 슬라이드 영상 재생
-  setTimeout(() => {
-    slides[cur].querySelectorAll('video').forEach(v => v.play().catch(() => {}));
-    slides[prev].classList.remove('exit-up', 'exit-down');
-    slides[prev].classList.add('slide-hidden');
-    locked = false;
-  }, 200);
-
-  updateUI();
-}
-
-function go(d) { goTo(cur + d); }
-
-function updateUI() {
-  document.getElementById('counter').textContent = `${cur + 1} / ${TOTAL}`;
-  document.querySelectorAll('.nav-dot').forEach((d, i) => d.classList.toggle('active', i === cur));
-  // dot color
-  document.querySelectorAll('.nav-dot').forEach((d, i) => {
-    d.classList.toggle('dark-dot', !DARK.includes(i));
+function copyEmail() {
+  navigator.clipboard.writeText('btozsales@tripbtoz.com').then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
   });
-  // mode bar & arrows color
-  const isDark = DARK.includes(cur);
-  document.getElementById('modeBar').classList.toggle('light', !isDark);
-  document.getElementById('navArrows').classList.toggle('light', !isDark);
 }
 
-// Keyboard
-document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowDown' || e.key === 'ArrowRight') go(1);
-  if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') go(-1);
-});
-
-// Wheel
-let wheelTimer = null;
-let isBrochure = false;
-
-document.addEventListener('wheel', e => {
-  if (isBrochure) return;
-  e.preventDefault();
-  if (wheelTimer) return;
-  go(e.deltaY > 0 ? 1 : -1);
-  wheelTimer = setTimeout(() => wheelTimer = null, 800);
-}, { passive: false });
-
-// Touch
-let touchY = 0;
-document.addEventListener('touchstart', e => touchY = e.touches[0].clientY, { passive: true });
-document.addEventListener('touchend', e => {
-  if (isBrochure) return;
-  const dy = touchY - e.changedTouches[0].clientY;
-  if (Math.abs(dy) > 50) go(dy > 0 ? 1 : -1);
-}, { passive: true });
-
-// Mode switch
-function setMode(mode) {
-  isBrochure = mode === 'brochure';
-
-  const wrap = document.getElementById('slidesWrap');
-  const arrows = document.getElementById('navArrows');
-  const dots = document.getElementById('navDots');
-  const modeBar = document.getElementById('modeBar');
-
-  if (isBrochure) {
-    // 브로셔: 세로 스크롤
-    document.documentElement.style.height = 'auto';
-    document.body.style.overflow = 'auto';
-    document.body.style.height = 'auto';
-    wrap.style.cssText = 'position:relative; height:auto; overflow:visible;';
-    document.querySelectorAll('.slide').forEach(s => {
-      s.style.cssText = 'position:relative; opacity:1; transform:none; min-height:100svh; pointer-events:all; transition:none;';
-    });
-    arrows.style.display = 'none';
-    dots.style.display = 'none';
-    modeBar.classList.add('light');
-    document.getElementById('btn-b').classList.add('active');
-    document.getElementById('btn-s').classList.remove('active');
-    window.scrollTo(0, 0);
-  } else {
-    // 슬라이드
-    document.documentElement.style.height = '100%';
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100%';
-    wrap.style.cssText = 'position:relative; height:100vh; overflow:hidden;';
-    document.querySelectorAll('.slide').forEach((s, i) => {
-      s.style.cssText = 'position:absolute; inset:0; min-height:unset;';
-      if (i === cur) {
-        s.classList.remove('slide-hidden');
-      } else {
-        s.classList.add('slide-hidden');
-      }
-    });
-    arrows.style.display = '';
-    dots.style.display = '';
-    document.getElementById('btn-s').classList.add('active');
-    document.getElementById('btn-b').classList.remove('active');
-    updateUI();
-  }
-}
-
-initDots();
-updateUI();
-
-// 기본값: 브로셔 모드로 시작
-isBrochure = true;
-document.getElementById('navArrows').style.display = 'none';
-document.getElementById('navDots').style.display = 'none';
-document.getElementById('btn-b').classList.add('active');
-document.getElementById('btn-s').classList.remove('active');
-document.getElementById('modeBar').classList.add('light');
-
-// 초기 모든 영상 정지 (autoplay 방지)
+// 영상 자동재생 (Intersection Observer)
 document.querySelectorAll('video').forEach(v => { v.pause(); v.currentTime = 0; });
 
-// 브로셔 모드 영상 Intersection Observer
 const videoObserver = new IntersectionObserver((entries) => {
-  if (!isBrochure) return;
   entries.forEach(entry => {
     const video = entry.target;
     if (entry.isIntersecting) {
